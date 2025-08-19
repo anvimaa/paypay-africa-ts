@@ -5,7 +5,7 @@
 
 import {
   PayPayClient,
-} from '../src';
+} from 'paypay-africa';
 
 import {
   Environment,
@@ -17,7 +17,7 @@ import {
   TradeRefundRequest,
   MulticaixaPayMethod,
   ReferencePayMethod
-} from '../src';
+} from 'paypay-africa';
 
 // Configuração do cliente
 const config: PayPayConfig = {
