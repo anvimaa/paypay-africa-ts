@@ -1,0 +1,46 @@
+{
+  "name": "paypay-africa",
+  "version": "1.0.0",
+  "description": "Biblioteca TypeScript para integração com a API do PayPay Africa",
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "scripts": {
+    "build": "tsc",
+    "dev": "tsc --watch",
+    "test": "jest",
+    "prepare": "npm run build"
+  },
+  "keywords": [
+    "paypay",
+    "africa",
+    "angola",
+    "payment",
+    "gateway",
+    "api",
+    "typescript"
+  ],
+  "author": "MiniMax Agent",
+  "license": "MIT",
+  "dependencies": {
+    "axios": "^1.6.0",
+    "crypto": "^1.0.1"
+  },
+  "devDependencies": {
+    "@types/node": "^20.0.0",
+    "typescript": "^5.0.0",
+    "jest": "^29.0.0",
+    "@types/jest": "^29.0.0",
+    "ts-jest": "^29.0.0"
+  },
+  "files": [
+    "dist/**/*"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/anvimaa/paypay-africa-ts.git"
+  },
+  "bugs": {
+    "url": "https://github.com/anvimaa/paypay-africa-ts/issues"
+  },
+  "homepage": "https://github.com/anvimaa/paypay-africa-ts#readme"
+}
