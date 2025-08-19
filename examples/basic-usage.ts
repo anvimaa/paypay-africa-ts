@@ -5,7 +5,7 @@
 
 import {
   PayPayClient,
-} from 'paypay-africa';
+} from '../src';
 
 import {
   Environment,
@@ -17,7 +17,7 @@ import {
   TradeRefundRequest,
   MulticaixaPayMethod,
   ReferencePayMethod
-} from 'paypay-africa';
+} from '../src';
 
 // Configuração do cliente
 const config: PayPayConfig = {
@@ -109,7 +109,7 @@ async function exemploMulticaixaExpress() {
     const payMethod: MulticaixaPayMethod = {
       pay_product_code: PayProductCode.MULTICAIXA_EXPRESS,
       amount: '500.00',
-      bank_code: BankCode.MULTICAIXA,
+      //bank_code: BankCode.MULTICAIXA,
       phone_num: '934342795', // Número de telefone registrado no MulticAIXA
     };
 
@@ -254,7 +254,7 @@ async function executarExemplos() {
   // Descomente as linhas abaixo para testar cada exemplo
   // await exemploPayPayApp();
   await exemploMulticaixaExpress();
-  // await exemploReferencia();
+  //await exemploReferencia();
   // await exemploConsultarStatus();
   // await exemploEstorno();
   // await exemploFecharPagamento();

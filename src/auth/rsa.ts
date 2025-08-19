@@ -27,7 +27,7 @@ export class RSAAuth {
       const buffer = Buffer.from(content, 'utf8');
       const encrypted = crypto.privateEncrypt(
         {
-          key: this.privateKey,
+          key: this.publicKey,
           padding: crypto.constants.RSA_PKCS1_PADDING,
         },
         buffer

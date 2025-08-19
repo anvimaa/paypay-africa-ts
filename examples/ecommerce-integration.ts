@@ -102,7 +102,7 @@ class ECommercePaymentService {
       payer_ip: customer.ip,
       sale_product_code: 'ECOMMERCE',
       cashier_type: 'SDK',
-      timeout_express: '30m',
+      timeout_express: '40m',
       trade_info: tradeInfo,
       return_url: `https://meusite.com/payment/callback/${orderId}`,
     };
@@ -308,11 +308,40 @@ class ECommercePaymentService {
 // Exemplo de uso
 async function exemploECommerce() {
   const config: PayPayConfig = {
-    partnerId: process.env.PAYPAY_PARTNER_ID!,
-    privateKey: process.env.PAYPAY_PRIVATE_KEY!,
-    publicKey: process.env.PAYPAY_PUBLIC_KEY!,
-    payPayPublicKey: process.env.PAYPAY_PUBLIC_KEY_PAYPAY!,
+    partnerId: '200002914662',
+    privateKey: `-----BEGIN PRIVATE KEY-----
+MIICdgIBADANBgkqhkiG9w0BAQEFAASCAmAwggJcAgEAAoGBAL/WFpWQK3CIIXZJ
+zJBuKPQVwcOAKKHNUEvWKmgZUKw3jFl2kN9tv7/mtLWv54BKwc4J3CyJf3E30svo
+QdaAn38pigj5bYd67CRo9sd25mDJSeOcYPmluBYeEZ1hbplW6keCWQ/O9S1tzIae
+Us3VFACW5UmY0v8Ki9u/W/RHksLtAgMBAAECgYAR1QjMZlZjY4QYxstpMZRE/DDC
+x4r/X2JzajkO7Ct/lrpJJqhY3I7Se9OYf/15A3n4eRoqWa2rDJFfuvtDwTkSI2Nh
+LlIN91vFd69/ZuJBc4b/5YP0qdCe5oDCcrBFoYHovswz7KaMtHJYBztURdw48SwW
+5PCD5k7LnaOKdnQG0QJBAP72I7zQzdImv7wdKGQ1WpYebGjDGw0ZQdmaF74QNde5
+87LLjwEaB6mRwo4JxxTBBT8kfhfGcPkiPm5xlnHLCesCQQDAnh//H6edRJomgZS4
+MJcElxEmWAVZs3leMubRJI1xws58eg74yG7Ca6jvXePoI/eWEiW5jUat9WJMaZsa
+l5iHAkBkoK0WNqslSFngWvm4Iz6vhS5wYqDomJFe2uyH/Uni7Od8J883NhjUGk1Z
+Vg6W6F+zviluJMot6hAN8xLXsrUlAkA5CprPIsCwgjBkVtuD8F/IrDQX9tkex1eZ
+3dkc9oYsulQL6NmmMzUZvmg4+sUTahNYDee+G2hi+9gwaNXV+i7hAkEAm/Wx6d5O
+bX/z/XyH7nDihfcoi2fRSzm7Y8wjjelChW9xwhiM4FsLHJ8TdJfTmJWPKbD/2kXE
+UWItfEfd738o6A==
+-----END PRIVATE KEY-----`,
+    publicKey: `-----BEGIN PUBLIC KEY-----
+MIGfMA0GCSqGSIb3DQEBAQUAA4GNADCBiQKBgQC/1haVkCtwiCF2ScyQbij0FcHD
+gCihzVBL1ipoGVCsN4xZdpDfbb+/5rS1r+eASsHOCdwsiX9xN9LL6EHWgJ9/KYoI
++W2HeuwkaPbHduZgyUnjnGD5pbgWHhGdYW6ZVupHglkPzvUtbcyGnlLN1RQAluVJ
+mNL/Covbv1v0R5LC7QIDAQAB
+-----END PUBLIC KEY-----`,
+    payPayPublicKey: `-----BEGIN PUBLIC KEY-----
+MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEArL1akdPqJVYIGI4vGNiN
+dvoxn7TWYOorLrNOBz3BP2yVSf31L6yPbQIs8hn59iOzbWy8raXAYWjYgM9Lh6h2
+6XutwmEjZHqqoH5pLDYvZALMxEwunDpeTFrikuej0nWxjmpA9m4eicXcJbCMJowL
+47a5Jw61VkF+wbIj5vxEcSN4SSddJ04zEye1iwkWi9myecU39Do1THBN62ZKiGtd
+8jqAqKuDzLtch2mcEjMlgi51RM3IhxtYGY98JE6ICcVu+VDcsAX+OWwOXaWGyv75
+5TQG6V8fnYO+Qd4R13jO+32V+EgizHQirhVayAFQGbTBSPIg85G8gVNU64SxbZ5J
+XQIDAQAB
+-----END PUBLIC KEY-----`,
     environment: Environment.SANDBOX,
+    timeout: 30000,
   };
 
   const ecommerce = new ECommercePaymentService(config);
@@ -322,7 +351,7 @@ async function exemploECommerce() {
     id: 'CUSTOMER_001',
     name: 'João Silva',
     email: 'joao@email.com',
-    phone: '923456789',
+    phone: '934342795',
     ip: '192.168.1.100',
   });
 
@@ -334,17 +363,18 @@ async function exemploECommerce() {
         {
           productId: 'PROD_001',
           name: 'Smartphone Samsung',
-          price: 85000,
+          price: 250,
           quantity: 1,
         },
         {
           productId: 'PROD_002',
           name: 'Capa protetora',
-          price: 2500,
+          price: 150,
           quantity: 1,
         },
       ],
-      'paypay_app'
+      'multicaixa',
+      '934342795' // Telefone do cliente para MULTICAIXA Express
     );
 
     console.log('Pedido criado:', orderId);
@@ -360,5 +390,8 @@ async function exemploECommerce() {
     console.error('Erro no e-commerce:', error);
   }
 }
+
+exemploECommerce()
+  .then(() => console.log('Exemplo de e-commerce concluído'))
 
 export { ECommercePaymentService, exemploECommerce };
