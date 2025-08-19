@@ -1,6 +1,6 @@
 /**
  * Utilitários para validação de parâmetros
- * @author MiniMax Agent
+ * @author anvimaa
  */
 
 import { PayPayValidationError, Language, PayMethod, PayProductCode, BankCode } from '../types';
@@ -139,7 +139,7 @@ export class ValidationUtils {
       const multicaixa = payMethod as any;
       this.required(multicaixa.phone_num, `${fieldName}.phone_num`);
       this.phoneNumber(multicaixa.phone_num, `${fieldName}.phone_num`);
-      
+
       if (multicaixa.bank_code && multicaixa.bank_code !== BankCode.MULTICAIXA) {
         throw new PayPayValidationError(
           `${fieldName}.bank_code deve ser 'MUL' para MULTICAIXA Express`

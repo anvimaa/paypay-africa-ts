@@ -1,6 +1,6 @@
 /**
  * Exemplo avançado: Webhook handler para notificações do PayPay
- * @author MiniMax Agent
+ * @author anvimaa
  */
 
 import express from 'express';
@@ -12,8 +12,8 @@ const config: PayPayConfig = {
   privateKey: process.env.PAYPAY_PRIVATE_KEY!,
   publicKey: process.env.PAYPAY_PUBLIC_KEY!,
   payPayPublicKey: process.env.PAYPAY_PUBLIC_KEY_PAYPAY!,
-  environment: process.env.NODE_ENV === 'production' 
-    ? Environment.PRODUCTION 
+  environment: process.env.NODE_ENV === 'production'
+    ? Environment.PRODUCTION
     : Environment.SANDBOX,
 };
 
@@ -26,44 +26,44 @@ app.use(express.json());
 app.post('/webhook/paypay', async (req, res) => {
   try {
     console.log('Notificação recebida:', req.body);
-    
+
     // Validar assinatura da notificação (recomendado)
     const auth = new RSAAuth(
-      config.privateKey, 
-      config.publicKey, 
+      config.privateKey,
+      config.publicKey,
       config.payPayPublicKey
     );
-    
+
     const isValidSignature = auth.verifySignature(req.body, req.body.sign);
-    
+
     if (!isValidSignature) {
       console.error('Assinatura inválida na notificação');
       return res.status(400).json({ error: 'Invalid signature' });
     }
-    
+
     // Processar notificação baseada no status
     const { out_trade_no, trade_no, status } = req.body.biz_content;
-    
+
     switch (status) {
       case 'S': // Sucesso
         await processarPagamentoSucesso(out_trade_no, trade_no);
         break;
-        
+
       case 'F': // Falha
         await processarPagamentoFalha(out_trade_no, trade_no);
         break;
-        
+
       case 'P': // Processando
         await processarPagamentoProcessando(out_trade_no, trade_no);
         break;
-        
+
       default:
         console.warn('Status desconhecido:', status);
     }
-    
+
     // Responder com sucesso
     res.json({ success: true });
-    
+
   } catch (error) {
     console.error('Erro ao processar webhook:', error);
     res.status(500).json({ error: 'Internal server error' });
@@ -73,11 +73,11 @@ app.post('/webhook/paypay', async (req, res) => {
 // Funções para processar diferentes status
 async function processarPagamentoSucesso(outTradeNo: string, tradeNo: string) {
   console.log(`Pagamento concluído com sucesso: ${outTradeNo} -> ${tradeNo}`);
-  
+
   // Atualizar banco de dados
   // Enviar confirmação por email
   // Liberar produto/serviço
-  
+
   // Confirmar o status consultando a API (opcional)
   try {
     const response = await payPayClient.queryPayment({ out_trade_no: outTradeNo });
@@ -89,7 +89,7 @@ async function processarPagamentoSucesso(outTradeNo: string, tradeNo: string) {
 
 async function processarPagamentoFalha(outTradeNo: string, tradeNo: string) {
   console.log(`Pagamento falhou: ${outTradeNo} -> ${tradeNo}`);
-  
+
   // Atualizar banco de dados
   // Notificar o cliente sobre a falha
   // Reverter reservas de estoque
@@ -97,7 +97,7 @@ async function processarPagamentoFalha(outTradeNo: string, tradeNo: string) {
 
 async function processarPagamentoProcessando(outTradeNo: string, tradeNo: string) {
   console.log(`Pagamento em processamento: ${outTradeNo} -> ${tradeNo}`);
-  
+
   // Atualizar status no banco de dados
   // Aguardar nova notificação
 }
@@ -106,18 +106,18 @@ async function processarPagamentoProcessando(outTradeNo: string, tradeNo: string
 app.get('/payment/:outTradeNo/status', async (req, res) => {
   try {
     const { outTradeNo } = req.params;
-    
+
     const response = await payPayClient.queryPayment({
       out_trade_no: outTradeNo
     });
-    
+
     res.json({
       out_trade_no: response.out_trade_no,
       trade_no: response.trade_no,
       status: response.status,
       status_description: getStatusDescription(response.status)
     });
-    
+
   } catch (error) {
     console.error('Erro ao consultar status:', error);
     res.status(500).json({ error: 'Erro ao consultar status' });

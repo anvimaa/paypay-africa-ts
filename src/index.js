@@ -1,7 +1,7 @@
 "use strict";
 /**
  * PayPay Africa TypeScript SDK
- * @author MiniMax Agent
+ * @author anvimaa
  * @version 1.0.0
  */
 Object.defineProperty(exports, "__esModule", { value: true });

@@ -1,7 +1,7 @@
 "use strict";
 /**
  * Sistema de autenticação RSA para PayPay Africa
- * @author MiniMax Agent
+ * @author anvimaa
  */
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.RSAAuth = void 0;
@@ -43,15 +43,15 @@ var RSAAuth = /** @class */ (function () {
                 .filter(function (key) { return key !== 'sign' && key !== 'sign_type'; })
                 .sort()
                 .reduce(function (result, key) {
-                result[key] = params[key];
-                return result;
-            }, {});
+                    result[key] = params[key];
+                    return result;
+                }, {});
             // Concatenar como pares chave-valor
             var queryString = Object.entries(filteredParams)
                 .map(function (_a) {
-                var key = _a[0], value = _a[1];
-                return "".concat(key, "=").concat(value);
-            })
+                    var key = _a[0], value = _a[1];
+                    return "".concat(key, "=").concat(value);
+                })
                 .join('&');
             // Gerar assinatura SHA1withRSA
             var sign = crypto.createSign('SHA1');
@@ -76,15 +76,15 @@ var RSAAuth = /** @class */ (function () {
                 .filter(function (key) { return key !== 'sign' && key !== 'sign_type'; })
                 .sort()
                 .reduce(function (result, key) {
-                result[key] = params[key];
-                return result;
-            }, {});
+                    result[key] = params[key];
+                    return result;
+                }, {});
             // Concatenar como pares chave-valor
             var queryString = Object.entries(filteredParams)
                 .map(function (_a) {
-                var key = _a[0], value = _a[1];
-                return "".concat(key, "=").concat(value);
-            })
+                    var key = _a[0], value = _a[1];
+                    return "".concat(key, "=").concat(value);
+                })
                 .join('&');
             // Verificar assinatura
             var verify = crypto.createVerify('SHA1');

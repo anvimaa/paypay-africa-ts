@@ -1,7 +1,7 @@
 "use strict";
 /**
  * Utilitários para validação de parâmetros
- * @author MiniMax Agent
+ * @author anvimaa
  */
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.ValidationUtils = void 0;

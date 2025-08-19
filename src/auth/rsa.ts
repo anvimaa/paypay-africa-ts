@@ -1,6 +1,6 @@
 /**
  * Sistema de autenticação RSA para PayPay Africa
- * @author MiniMax Agent
+ * @author anvimaa
  */
 
 import * as crypto from 'crypto';
@@ -95,7 +95,7 @@ export class RSAAuth {
       // Verificar assinatura
       const verify = crypto.createVerify('SHA1');
       verify.update(queryString, 'utf8');
-      
+
       return verify.verify(this.payPayPublicKey, signature, 'base64');
     } catch (error) {
       throw new PayPayAuthenticationError(`Erro ao verificar assinatura: ${error}`);
@@ -109,7 +109,7 @@ export class RSAAuth {
    */
   static urlEncodeValues(obj: Record<string, any>): Record<string, any> {
     const encoded: Record<string, any> = {};
-    
+
     for (const [key, value] of Object.entries(obj)) {
       if (typeof value === 'string') {
         encoded[key] = encodeURIComponent(value);
@@ -119,7 +119,7 @@ export class RSAAuth {
         encoded[key] = value;
       }
     }
-    
+
     return encoded;
   }
 
@@ -130,17 +130,17 @@ export class RSAAuth {
    */
   static generateTimestamp(date?: Date): string {
     const now = date || new Date();
-    
+
     // PayPay usa GMT+1, então ajustamos
     const gmtPlus1 = new Date(now.getTime() + (1 * 60 * 60 * 1000));
-    
+
     const year = gmtPlus1.getFullYear();
     const month = String(gmtPlus1.getMonth() + 1).padStart(2, '0');
     const day = String(gmtPlus1.getDate()).padStart(2, '0');
     const hours = String(gmtPlus1.getHours()).padStart(2, '0');
     const minutes = String(gmtPlus1.getMinutes()).padStart(2, '0');
     const seconds = String(gmtPlus1.getSeconds()).padStart(2, '0');
-    
+
     return `${year}-${month}-${day} ${hours}:${minutes}:${seconds}`;
   }
 
@@ -164,7 +164,7 @@ export class RSAAuth {
       // Verifica se é uma chave privada ou pública válida
       const isPrivateKey = key.includes('BEGIN PRIVATE KEY') || key.includes('BEGIN RSA PRIVATE KEY');
       const isPublicKey = key.includes('BEGIN PUBLIC KEY') || key.includes('BEGIN RSA PUBLIC KEY');
-      
+
       if (!isPrivateKey && !isPublicKey) {
         return false;
       }
@@ -175,7 +175,7 @@ export class RSAAuth {
       } else {
         crypto.createPublicKey(key);
       }
-      
+
       return true;
     } catch {
       return false;

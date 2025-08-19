@@ -1,6 +1,6 @@
 /**
  * Serviço HTTP para comunicação com a API PayPay
- * @author MiniMax Agent
+ * @author anvimaa
  */
 
 import axios, { AxiosInstance, AxiosResponse } from 'axios';
@@ -12,9 +12,9 @@ export class HttpService {
 
   constructor(config: PayPayConfig) {
     this.config = config;
-    
+
     const baseURL = config.baseUrl || this.getDefaultBaseUrl(config.environment);
-    
+
     this.client = axios.create({
       baseURL,
       timeout: config.timeout || 30000,
@@ -65,7 +65,7 @@ export class HttpService {
       },
       (error) => {
         console.error('[PayPay] Erro na resposta:', error);
-        
+
         if (error.response) {
           throw new PayPayNetworkError(
             `Erro HTTP ${error.response.status}: ${error.response.statusText}`

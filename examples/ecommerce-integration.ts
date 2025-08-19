@@ -1,6 +1,6 @@
 /**
  * Exemplo: Integração com e-commerce
- * @author MiniMax Agent
+ * @author anvimaa
  */
 
 import {
@@ -71,7 +71,7 @@ class ECommercePaymentService {
 
     // Calcular total
     const totalAmount = items.reduce((sum, item) => sum + (item.price * item.quantity), 0);
-    
+
     // Criar pedido
     const orderId = `ORDER_${Date.now()}_${Math.random().toString(36).substr(2, 9)}`;
     const order: Order = {
@@ -83,7 +83,7 @@ class ECommercePaymentService {
       paymentMethod,
       createdAt: new Date(),
     };
-    
+
     this.orders.set(orderId, order);
 
     // Preparar dados para pagamento
@@ -109,7 +109,7 @@ class ECommercePaymentService {
 
     try {
       let paymentResponse;
-      
+
       switch (paymentMethod) {
         case 'paypay_app':
           paymentResponse = await this.payPayClient.createPaymentWithApp(
@@ -117,38 +117,38 @@ class ECommercePaymentService {
             Language.PORTUGUESE
           );
           break;
-          
+
         case 'multicaixa':
           if (!customerPhone) {
             throw new Error('Número de telefone obrigatório para MULTICAIXA Express');
           }
-          
+
           const multicaixaPayMethod: MulticaixaPayMethod = {
             pay_product_code: PayProductCode.MULTICAIXA_EXPRESS,
             amount: totalAmount.toFixed(2),
             bank_code: BankCode.MULTICAIXA,
             phone_num: customerPhone,
           };
-          
+
           paymentResponse = await this.payPayClient.createPaymentWithMulticaixa({
             ...baseRequest,
             pay_method: multicaixaPayMethod,
           });
           break;
-          
+
         case 'reference':
           const referencePayMethod: ReferencePayMethod = {
             pay_product_code: PayProductCode.REFERENCE,
             amount: totalAmount.toFixed(2),
             bank_code: BankCode.REFERENCE,
           };
-          
+
           paymentResponse = await this.payPayClient.createPaymentWithReference({
             ...baseRequest,
             pay_method: referencePayMethod,
           });
           break;
-          
+
         default:
           throw new Error(`Método de pagamento não suportado: ${paymentMethod}`);
       }
@@ -161,7 +161,7 @@ class ECommercePaymentService {
         orderId,
         paymentData: paymentResponse,
       };
-      
+
     } catch (error) {
       // Marcar pedido como falhou
       order.status = 'failed';
@@ -201,7 +201,7 @@ class ECommercePaymentService {
           order.status = 'pending';
           break;
       }
-      
+
       this.orders.set(orderId, order);
 
       return {
@@ -210,7 +210,7 @@ class ECommercePaymentService {
         paymentStatus: response.status,
         lastUpdated: new Date(),
       };
-      
+
     } catch (error) {
       console.error('Erro ao verificar status do pagamento:', error);
       throw error;
@@ -240,7 +240,7 @@ class ECommercePaymentService {
 
     try {
       const refundTradeNo = `REFUND_${orderId}_${Date.now()}`;
-      
+
       const response = await this.payPayClient.refundPayment({
         out_trade_no: refundTradeNo,
         orig_out_trade_no: orderId,
@@ -251,7 +251,7 @@ class ECommercePaymentService {
         success: response.status === TransactionStatus.SUCCESS,
         refundTradeNo: response.trade_no,
       };
-      
+
     } catch (error) {
       console.error('Erro ao processar estorno:', error);
       throw error;
@@ -278,7 +278,7 @@ class ECommercePaymentService {
 
       order.status = 'cancelled';
       this.orders.set(orderId, order);
-      
+
       return true;
     } catch (error) {
       console.error('Erro ao cancelar pedido:', error);

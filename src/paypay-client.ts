@@ -1,6 +1,6 @@
 /**
  * Cliente principal da API PayPay Africa
- * @author MiniMax Agent
+ * @author anvimaa
  */
 
 import {
@@ -74,11 +74,11 @@ export class PayPayClient {
   ): BaseRequest {
     const requestNo = RSAAuth.generateRequestNo();
     const timestamp = RSAAuth.generateTimestamp();
-    
+
     // Criptografar biz_content
     const bizContentString = JSON.stringify(bizContent);
     const encryptedBizContent = this.auth.encryptContent(bizContentString);
-    
+
     // Construir parâmetros base (sem assinatura)
     const baseParams = {
       request_no: requestNo,
@@ -142,7 +142,7 @@ export class PayPayClient {
 
     const baseRequest = this.buildBaseRequest('instant_trade', request, language);
     const response = await this.http.apiCall<InstantTradeResponse>(baseRequest);
-    
+
     return this.processResponse(response);
   }
 
@@ -154,7 +154,7 @@ export class PayPayClient {
     language: Language = Language.PORTUGUESE
   ): Promise<InstantTradeResponse> {
     this.validateInstantTradeRequest(request);
-    
+
     if (!request.pay_method) {
       throw new PayPayValidationError('pay_method é obrigatório para MULTICAIXA Express');
     }
@@ -163,7 +163,7 @@ export class PayPayClient {
 
     const baseRequest = this.buildBaseRequest('instant_trade', request, language);
     const response = await this.http.apiCall<InstantTradeResponse>(baseRequest);
-    
+
     return this.processResponse(response);
   }
 
@@ -175,7 +175,7 @@ export class PayPayClient {
     language: Language = Language.PORTUGUESE
   ): Promise<InstantTradeResponse> {
     this.validateInstantTradeRequest(request);
-    
+
     if (!request.pay_method) {
       throw new PayPayValidationError('pay_method é obrigatório para pagamento por referência');
     }
@@ -184,7 +184,7 @@ export class PayPayClient {
 
     const baseRequest = this.buildBaseRequest('instant_trade', request, language);
     const response = await this.http.apiCall<InstantTradeResponse>(baseRequest);
-    
+
     return this.processResponse(response);
   }
 
@@ -199,7 +199,7 @@ export class PayPayClient {
 
     const baseRequest = this.buildBaseRequest('trade_refund', request, language);
     const response = await this.http.apiCall<TradeRefundResponse>(baseRequest);
-    
+
     return this.processResponse(response);
   }
 
@@ -214,7 +214,7 @@ export class PayPayClient {
 
     const baseRequest = this.buildBaseRequest('trade_close', request, language);
     const response = await this.http.apiCall<TradeCloseResponse>(baseRequest);
-    
+
     return this.processResponse(response);
   }
 
@@ -229,7 +229,7 @@ export class PayPayClient {
 
     const baseRequest = this.buildBaseRequest('trade_query', request, language);
     const response = await this.http.apiCall<TradeQueryResponse>(baseRequest);
-    
+
     return this.processResponse(response);
   }
 
@@ -238,10 +238,10 @@ export class PayPayClient {
   private validateInstantTradeRequest(request: InstantTradeRequest): void {
     ValidationUtils.required(request.payer_ip, 'payer_ip');
     ValidationUtils.ip(request.payer_ip, 'payer_ip');
-    
+
     ValidationUtils.required(request.sale_product_code, 'sale_product_code');
     ValidationUtils.validateLength(request.sale_product_code, 1, 9, 'sale_product_code');
-    
+
     ValidationUtils.required(request.cashier_type, 'cashier_type');
     if (request.cashier_type !== 'SDK') {
       throw new PayPayValidationError('cashier_type deve ser "SDK"');
@@ -264,26 +264,26 @@ export class PayPayClient {
     ValidationUtils.required(tradeInfo.out_trade_no, 'trade_info.out_trade_no');
     ValidationUtils.validateLength(tradeInfo.out_trade_no, 6, 32, 'trade_info.out_trade_no');
     ValidationUtils.alphanumericUnderscore(tradeInfo.out_trade_no, 'trade_info.out_trade_no');
-    
+
     ValidationUtils.required(tradeInfo.subject, 'trade_info.subject');
     ValidationUtils.validateLength(tradeInfo.subject, 1, 256, 'trade_info.subject');
-    
+
     if (tradeInfo.currency) {
       ValidationUtils.currency(tradeInfo.currency, 'trade_info.currency');
     }
-    
+
     ValidationUtils.required(tradeInfo.price, 'trade_info.price');
     ValidationUtils.amount(tradeInfo.price, 'trade_info.price');
-    
+
     ValidationUtils.required(tradeInfo.quantity, 'trade_info.quantity');
     ValidationUtils.validateLength(tradeInfo.quantity, 1, 5, 'trade_info.quantity');
-    
+
     ValidationUtils.required(tradeInfo.total_amount, 'trade_info.total_amount');
     ValidationUtils.amount(tradeInfo.total_amount, 'trade_info.total_amount');
-    
+
     ValidationUtils.required(tradeInfo.payee_identity, 'trade_info.payee_identity');
     ValidationUtils.validateLength(tradeInfo.payee_identity, 1, 32, 'trade_info.payee_identity');
-    
+
     ValidationUtils.required(tradeInfo.payee_identity_type, 'trade_info.payee_identity_type');
     if (tradeInfo.payee_identity_type !== '1') {
       throw new PayPayValidationError('trade_info.payee_identity_type deve ser "1"');
@@ -294,10 +294,10 @@ export class PayPayClient {
     ValidationUtils.required(request.out_trade_no, 'out_trade_no');
     ValidationUtils.validateLength(request.out_trade_no, 6, 32, 'out_trade_no');
     ValidationUtils.alphanumericUnderscore(request.out_trade_no, 'out_trade_no');
-    
+
     ValidationUtils.required(request.orig_out_trade_no, 'orig_out_trade_no');
     ValidationUtils.validateLength(request.orig_out_trade_no, 1, 32, 'orig_out_trade_no');
-    
+
     ValidationUtils.required(request.refund_amount, 'refund_amount');
     ValidationUtils.amount(request.refund_amount, 'refund_amount');
   }

@@ -1,6 +1,6 @@
 /**
  * Tipos e interfaces para a API do PayPay Africa
- * @author MiniMax Agent
+ * @author anvimaa
  */
 
 // Configurações da API

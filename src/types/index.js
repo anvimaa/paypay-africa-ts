@@ -1,7 +1,7 @@
 "use strict";
 /**
  * Tipos e interfaces para a API do PayPay Africa
- * @author MiniMax Agent
+ * @author anvimaa
  */
 var __extends = (this && this.__extends) || (function () {
     var extendStatics = function (d, b) {

@@ -128,4 +128,4 @@ A biblioteca está pronta para:
 
 ---
 
-**Desenvolvido por MiniMax Agent** - Biblioteca completa e robusta para integração com PayPay Africa 🇦🇴
+**Desenvolvido por anvimaa** - Biblioteca completa e robusta para integração com PayPay Africa 🇦🇴

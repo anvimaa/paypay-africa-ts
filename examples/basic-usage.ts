@@ -1,6 +1,6 @@
 /**
  * Exemplo de uso da biblioteca PayPay Africa
- * @author MiniMax Agent
+ * @author anvimaa
  */
 
 import {
