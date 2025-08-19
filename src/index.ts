@@ -65,7 +65,7 @@ export const CONSTANTS = {
   SUCCESS_CODE: 'S0001',
   TIMEOUT_DEFAULT: '2H',
   URLS: {
-    SANDBOX: 'https://sandbox-api.paypayafrica.com',
-    PRODUCTION: 'https://api.paypayafrica.com',
+    SANDBOX: 'https://gateway.paypayafrica.com/recv.do',
+    PRODUCTION: 'https://gateway.paypayafrica.com/recv.do',
   },
 } as const;
