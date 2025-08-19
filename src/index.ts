@@ -7,15 +7,18 @@
 // Classe principal
 export { PayPayClient } from './paypay-client';
 
+export {
+  Environment,
+  Language,
+  PayProductCode,
+  BankCode,
+  TransactionStatus
+} from './types';
+
 // Tipos e interfaces
 export type {
   PayPayConfig,
-  Environment,
-  Language,
-  TransactionStatus,
   PaymentMethod,
-  PayProductCode,
-  BankCode,
   BaseRequest,
   BaseResponse,
   TradeInfo,

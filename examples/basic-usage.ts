@@ -5,6 +5,9 @@
 
 import {
   PayPayClient,
+} from '../src';
+
+import {
   Environment,
   Language,
   PayProductCode,
@@ -38,7 +41,7 @@ const payPayClient = new PayPayClient(config);
 // === EXEMPLO 1: Pagamento com PayPay App ===
 async function exemploPayPayApp() {
   console.log('=== Exemplo: Pagamento com PayPay App ===');
-  
+
   try {
     const request: InstantTradeRequest = {
       payer_ip: '192.168.1.100',
@@ -59,18 +62,18 @@ async function exemploPayPayApp() {
     };
 
     const response = await payPayClient.createPaymentWithApp(request, Language.PORTUGUESE);
-    
+
     console.log('Pagamento criado com sucesso:');
     console.log('- Número da transação:', response.trade_no);
     console.log('- Status:', response.status);
     console.log('- Token:', response.trade_token);
     console.log('- Link dinâmico:', response.dynamic_link);
-    
+
     // Para web: gerar QR code com o dynamic_link
     // Para mobile: usar o trade_token com o URL scheme
     const mobileUrl = `paypayao://trade/pay?action=pay&tradeToken=${response.trade_token}`;
     console.log('- URL para mobile:', mobileUrl);
-    
+
   } catch (error) {
     console.error('Erro no pagamento:', error);
   }
@@ -79,7 +82,7 @@ async function exemploPayPayApp() {
 // === EXEMPLO 2: Pagamento com MULTICAIXA Express ===
 async function exemploMulticaixaExpress() {
   console.log('\n=== Exemplo: Pagamento com MULTICAIXA Express ===');
-  
+
   try {
     const payMethod: MulticaixaPayMethod = {
       pay_product_code: PayProductCode.MULTICAIXA_EXPRESS,
@@ -106,11 +109,11 @@ async function exemploMulticaixaExpress() {
     };
 
     const response = await payPayClient.createPaymentWithMulticaixa(request);
-    
+
     console.log('Pagamento MULTICAIXA criado:');
     console.log('- Número da transação:', response.trade_no);
     console.log('- Status:', response.status);
-    
+
   } catch (error) {
     console.error('Erro no pagamento MULTICAIXA:', error);
   }
@@ -119,7 +122,7 @@ async function exemploMulticaixaExpress() {
 // === EXEMPLO 3: Pagamento por Referência ===
 async function exemploReferencia() {
   console.log('\n=== Exemplo: Pagamento por Referência ===');
-  
+
   try {
     const payMethod: ReferencePayMethod = {
       pay_product_code: PayProductCode.REFERENCE,
@@ -145,13 +148,13 @@ async function exemploReferencia() {
     };
 
     const response = await payPayClient.createPaymentWithReference(request);
-    
+
     console.log('Pagamento por referência criado:');
     console.log('- Número da transação:', response.trade_no);
     console.log('- Status:', response.status);
     console.log('- Entity ID:', response.entity_id);
     console.log('- Reference ID:', response.reference_id);
-    
+
   } catch (error) {
     console.error('Erro no pagamento por referência:', error);
   }
@@ -160,19 +163,19 @@ async function exemploReferencia() {
 // === EXEMPLO 4: Consultar Status ===
 async function exemploConsultarStatus() {
   console.log('\n=== Exemplo: Consultar Status ===');
-  
+
   try {
     const request = {
       out_trade_no: 'ORDER_1234567890', // Número do seu pedido
     };
 
     const response = await payPayClient.queryPayment(request);
-    
+
     console.log('Status da transação:');
     console.log('- Número do pedido:', response.out_trade_no);
     console.log('- Número da transação:', response.trade_no);
     console.log('- Status:', response.status);
-    
+
   } catch (error) {
     console.error('Erro ao consultar status:', error);
   }
@@ -181,7 +184,7 @@ async function exemploConsultarStatus() {
 // === EXEMPLO 5: Estorno ===
 async function exemploEstorno() {
   console.log('\n=== Exemplo: Estorno ===');
-  
+
   try {
     const request: TradeRefundRequest = {
       out_trade_no: `REFUND_${Date.now()}`,
@@ -190,12 +193,12 @@ async function exemploEstorno() {
     };
 
     const response = await payPayClient.refundPayment(request);
-    
+
     console.log('Estorno processado:');
     console.log('- Número do estorno:', response.out_trade_no);
     console.log('- Número da transação:', response.trade_no);
     console.log('- Status:', response.status);
-    
+
   } catch (error) {
     console.error('Erro no estorno:', error);
   }
@@ -204,18 +207,18 @@ async function exemploEstorno() {
 // === EXEMPLO 6: Fechar Pagamento ===
 async function exemploFecharPagamento() {
   console.log('\n=== Exemplo: Fechar Pagamento ===');
-  
+
   try {
     const request = {
       out_trade_no: 'ORDER_1234567890',
     };
 
     const response = await payPayClient.closePayment(request);
-    
+
     console.log('Pagamento fechado:');
     console.log('- Número do pedido:', response.out_trade_no);
     console.log('- Número da transação:', response.trade_no);
-    
+
   } catch (error) {
     console.error('Erro ao fechar pagamento:', error);
   }
@@ -224,7 +227,7 @@ async function exemploFecharPagamento() {
 // Executar exemplos
 async function executarExemplos() {
   console.log('=== Exemplos da Biblioteca PayPay Africa ===\n');
-  
+
   // Descomente as linhas abaixo para testar cada exemplo
   // await exemploPayPayApp();
   // await exemploMulticaixaExpress();
@@ -232,7 +235,7 @@ async function executarExemplos() {
   // await exemploConsultarStatus();
   // await exemploEstorno();
   // await exemploFecharPagamento();
-  
+
   console.log('\n=== Todos os exemplos concluídos ===');
 }
 
