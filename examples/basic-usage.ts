@@ -88,7 +88,7 @@ async function exemploMulticaixaExpress() {
       pay_product_code: PayProductCode.MULTICAIXA_EXPRESS,
       amount: '1500.00',
       bank_code: BankCode.MULTICAIXA,
-      phone_num: '923456789', // Número de telefone registrado no MulticAIXA
+      phone_num: '934342795', // Número de telefone registrado no MulticAIXA
     };
 
     const request: InstantTradeRequest = {
