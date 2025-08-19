@@ -342,4 +342,4 @@ Para suporte técnico:
 
 ---
 
-**Desenvolvido por MiniMax Agent** - Biblioteca não oficial para integração com PayPay Africa
+**Desenvolvido por @anvimaa** - Biblioteca não oficial para integração com PayPay Africa

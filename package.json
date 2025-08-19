@@ -38,7 +38,7 @@
   ],
   "repository": {
     "type": "git",
-    "url": "https://github.com/anvimaa/paypay-africa-ts.git"
+    "url": "git+https://github.com/anvimaa/paypay-africa-ts.git"
   },
   "bugs": {
     "url": "https://github.com/anvimaa/paypay-africa-ts/issues"
