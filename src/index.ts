@@ -4,6 +4,7 @@
  * @version 1.0.0
  */
 
+
 // Classe principal
 export { PayPayClient } from './paypay-client';
 
@@ -49,6 +50,7 @@ export { ValidationUtils } from './auth/validation';
 
 // Serviços
 export { HttpService } from './services/http';
+export { getPayerIp } from './services/http';
 
 // Versão da biblioteca
 export const VERSION = '1.0.4';
