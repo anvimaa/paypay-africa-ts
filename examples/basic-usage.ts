@@ -5,9 +5,6 @@
 
 import {
   PayPayClient,
-} from '../src';
-
-import {
   Environment,
   Language,
   PayProductCode,
@@ -16,10 +13,9 @@ import {
   InstantTradeRequest,
   TradeRefundRequest,
   MulticaixaPayMethod,
-  ReferencePayMethod
+  ReferencePayMethod,
+  getPayerIp
 } from 'paypay-africa';
-
-import { getPayerIp } from '../src';
 
 // Configuração do cliente
 const config: PayPayConfig = {

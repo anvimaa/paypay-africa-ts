@@ -18,8 +18,8 @@ importers:
         specifier: ^5.1.0
         version: 5.1.0
       paypay-africa:
-        specifier: ^1
-        version: 1.0.2
+        specifier: ^1.0.7
+        version: 1.0.7
     devDependencies:
       '@types/jest':
         specifier: ^29.0.0
@@ -1146,8 +1146,8 @@ packages:
     resolution: {integrity: sha512-TdrF7fW9Rphjq4RjrW0Kp2AW0Ahwu9sRGTkS6bvDi0SCwZlEZYmcfDbEsTz8RVk0EHIS/Vd1bv3JhG+1xZuAyQ==}
     engines: {node: '>=16'}
 
-  paypay-africa@1.0.2:
-    resolution: {integrity: sha512-foR5f/F/rJDyHBdJFr/LTyONhUgf+6AdnPu0OTsGuzc8jlsGfaOAeEQlY1ItKmCfB0rYwvbY5HSuJOfOkfoJzQ==}
+  paypay-africa@1.0.7:
+    resolution: {integrity: sha512-Rm1gZUYOGQG9eVmKnW/9St0R5aajw49ad8AxTdoXows2ZYghwlNE52IRGqlqqjlqdz8iUS8R+D5/gbRpTJtqZg==}
 
   picocolors@1.1.1:
     resolution: {integrity: sha512-xceH2snhtb5M9liqDsmEw56le376mTZkEX/jEb/RxNFyegNul7eNslCXP9FDj/Lcu0X8KEyMceP2ntpaHrDEVA==}
@@ -2893,7 +2893,7 @@ snapshots:
 
   path-to-regexp@8.2.0: {}
 
-  paypay-africa@1.0.2:
+  paypay-africa@1.0.7:
     dependencies:
       axios: 1.11.0
       crypto: 1.0.1
