@@ -33,9 +33,9 @@ export class HttpService {
   private getDefaultBaseUrl(environment: string): string {
     switch (environment) {
       case 'sandbox':
-        return 'https://sandbox-api.paypayafrica.com';
+        return 'https://gateway.paypayafrica.com';
       case 'production':
-        return 'https://api.paypayafrica.com';
+        return 'https://gateway.paypayafrica.com';
       default:
         throw new PayPayNetworkError(`Ambiente inválido: ${environment}`);
     }
@@ -102,6 +102,18 @@ export class HttpService {
    * Método genérico para todas as chamadas da API PayPay
    */
   async apiCall<T = any>(data: BaseRequest): Promise<BaseResponse & { biz_content: T }> {
-    return this.post<T>('/gateway.do', data);
+    return this.post<T>('/recv.do', data);
+  }
+}
+
+// get ip of machine
+export async function getPayerIp() {
+  try {
+    const response = await fetch('https://api.ipify.org?format=json');
+    const data = await response.json() as { ip: string };
+    return data.ip;
+  } catch (error) {
+    console.warn('Failed to get external IP, using localhost:', error);
+    return '127.0.0.1';
   }
 }

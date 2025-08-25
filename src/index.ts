@@ -51,7 +51,7 @@ export { ValidationUtils } from './auth/validation';
 export { HttpService } from './services/http';
 
 // Versão da biblioteca
-export const VERSION = '1.0.0';
+export const VERSION = '1.0.4';
 
 // Constantes úteis
 export const CONSTANTS = {

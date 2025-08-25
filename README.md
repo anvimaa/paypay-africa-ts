@@ -25,7 +25,7 @@ npm install paypay-africa
 ou
 
 ```bash
-yarn add paypay-africa
+pnpm add paypay-africa
 ```
 
 ## ⚙️ Configuração Inicial
@@ -261,13 +261,13 @@ try {
 ### Sandbox (Teste)
 ```typescript
 environment: Environment.SANDBOX
-// URL: https://sandbox-api.paypayafrica.com
+// URL: https://gateway.paypayafrica.com/recv.do
 ```
 
 ### Produção
 ```typescript
 environment: Environment.PRODUCTION
-// URL: https://api.paypayafrica.com
+// URL: https://gateway.paypayafrica.com/recv.do
 ```
 
 ## 📝 Status de Transação

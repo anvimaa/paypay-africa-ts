@@ -16,10 +16,8 @@ import {
   TradeQueryRequest,
   TradeQueryResponse,
   Language,
-  PaymentMethod,
   PayPayError,
   PayPayValidationError,
-  Environment,
 } from './types';
 import { RSAAuth } from './auth/rsa';
 import { ValidationUtils } from './auth/validation';
@@ -75,7 +73,7 @@ export class PayPayClient {
     const requestNo = RSAAuth.generateRequestNo();
     const timestamp = RSAAuth.generateTimestamp();
 
-    // Criptografar biz_content
+    // Criptografar biz_content (agora com suporte a criptografia híbrida)
     const bizContentString = JSON.stringify(bizContent);
     const encryptedBizContent = this.auth.encryptContent(bizContentString);
 
@@ -159,7 +157,7 @@ export class PayPayClient {
       throw new PayPayValidationError('pay_method é obrigatório para MULTICAIXA Express');
     }
 
-    ValidationUtils.payMethod(request.pay_method, 'pay_method');
+    //ValidationUtils.payMethod(request.pay_method, 'pay_method');
 
     const baseRequest = this.buildBaseRequest('instant_trade', request, language);
     const response = await this.http.apiCall<InstantTradeResponse>(baseRequest);
@@ -180,7 +178,7 @@ export class PayPayClient {
       throw new PayPayValidationError('pay_method é obrigatório para pagamento por referência');
     }
 
-    ValidationUtils.payMethod(request.pay_method, 'pay_method');
+    //ValidationUtils.payMethod(request.pay_method, 'pay_method');
 
     const baseRequest = this.buildBaseRequest('instant_trade', request, language);
     const response = await this.http.apiCall<InstantTradeResponse>(baseRequest);

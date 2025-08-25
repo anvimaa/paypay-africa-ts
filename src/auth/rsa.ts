@@ -18,21 +18,56 @@ export class RSAAuth {
   }
 
   /**
-   * Criptografa o conteúdo usando a chave privada RSA
+   * Criptografa o conteúdo usando criptografia híbrida AES+RSA
+   * Para conteúdos grandes, usa AES para os dados e RSA para criptografar a chave AES
    * @param content - Conteúdo a ser criptografado
-   * @returns Conteúdo criptografado em base64
+   * @returns Conteúdo criptografado em base64 com chave AES criptografada
    */
   encryptContent(content: string): string {
     try {
       const buffer = Buffer.from(content, 'utf8');
-      const encrypted = crypto.privateEncrypt(
+
+      // Se o conteúdo for pequeno o suficiente, usar RSA diretamente
+      if (buffer.length <= 117) { // Máximo para RSA 1024-bit com padding
+        const encrypted = crypto.privateEncrypt(
+          {
+            key: this.privateKey,
+            padding: crypto.constants.RSA_PKCS1_PADDING,
+          },
+          buffer
+        );
+        return encrypted.toString('base64');
+      }
+
+      // Para conteúdos grandes, usar criptografia híbrida AES+RSA
+      // Gerar chave AES aleatória
+      const aesKey = crypto.randomBytes(32); // 256-bit key
+      const iv = crypto.randomBytes(16); // 128-bit IV
+
+      // Criptografar dados com AES
+      const aesCipher = crypto.createCipher('aes-256-cbc', aesKey);
+      aesCipher.setAutoPadding(true);
+      let encryptedData = aesCipher.update(content, 'utf8', 'base64');
+      encryptedData += aesCipher.final('base64');
+
+      // Criptografar chave AES com RSA
+      const encryptedAesKey = crypto.privateEncrypt(
         {
           key: this.privateKey,
           padding: crypto.constants.RSA_PKCS1_PADDING,
         },
-        buffer
+        aesKey
       );
-      return encrypted.toString('base64');
+
+      // Retornar formato: {chave_rsa_base64}:{dados_aes_base64}:{iv_base64}
+      const result = {
+        key: encryptedAesKey.toString('base64'),
+        data: encryptedData,
+        iv: iv.toString('base64')
+      };
+
+      return Buffer.from(JSON.stringify(result)).toString('base64');
+
     } catch (error) {
       throw new PayPayAuthenticationError(`Erro ao criptografar conteúdo: ${error}`);
     }

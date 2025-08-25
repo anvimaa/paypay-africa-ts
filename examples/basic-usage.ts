@@ -18,6 +18,7 @@ import {
   MulticaixaPayMethod,
   ReferencePayMethod
 } from '../src';
+import { getPayerIp } from '../src/services/http';
 
 // Configuração do cliente
 const config: PayPayConfig = {
@@ -66,10 +67,10 @@ async function exemploPayPayApp() {
 
   try {
     const request: InstantTradeRequest = {
-      payer_ip: '192.168.1.100',
+      payer_ip: await getPayerIp(),
       sale_product_code: 'PROD001',
       cashier_type: 'SDK',
-      timeout_express: '30m',
+      timeout_express: '45m',
       trade_info: {
         out_trade_no: `ORDER_${Date.now()}`,
         subject: 'Compra de produto teste',
@@ -77,7 +78,7 @@ async function exemploPayPayApp() {
         price: '1000.00',
         quantity: '1',
         total_amount: '1000.00',
-        payee_identity: '200001835716',
+        payee_identity: config.partnerId,
         payee_identity_type: '1',
       },
       return_url: 'https://meusite.com/callback',
@@ -109,19 +110,19 @@ async function exemploMulticaixaExpress() {
     const payMethod: MulticaixaPayMethod = {
       pay_product_code: PayProductCode.MULTICAIXA_EXPRESS,
       amount: '500.00',
-      //bank_code: BankCode.MULTICAIXA,
-      phone_num: '934342795', // Número de telefone registrado no MulticAIXA
+      bank_code: BankCode.MULTICAIXA,
+      phone_num: '934342795',
     };
 
     const request: InstantTradeRequest = {
       cashier_type: 'SDK',
-      payer_ip: '192.168.1.100',
+      payer_ip: await getPayerIp(),
       sale_product_code: '050200001',
       timeout_express: '50m',
       trade_info: {
         currency: 'AOA',
         out_trade_no: `MULTICAIXA_${Date.now()}`,
-        payee_identity: '200001835716',
+        payee_identity: config.partnerId,
         payee_identity_type: '1',
         price: '500.00',
         quantity: '1',
@@ -164,7 +165,7 @@ async function exemploReferencia() {
         price: '2000.00',
         quantity: '1',
         total_amount: '2000.00',
-        payee_identity: '200001835716',
+        payee_identity: config.partnerId,
         payee_identity_type: '1',
       },
       pay_method: payMethod,
