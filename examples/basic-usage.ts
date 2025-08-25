@@ -5,7 +5,7 @@
 
 import {
   PayPayClient,
-} from 'paypay-africa';
+} from '../src';
 
 import {
   Environment,
@@ -19,7 +19,7 @@ import {
   ReferencePayMethod
 } from 'paypay-africa';
 
-import { getPayerIp } from 'paypay-africa';
+import { getPayerIp } from '../src';
 
 // Configuração do cliente
 const config: PayPayConfig = {
