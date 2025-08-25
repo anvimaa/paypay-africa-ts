@@ -1,6 +1,6 @@
 {
   "name": "paypay-africa",
-  "version": "1.0.5",
+  "version": "1.0.6",
   "description": "Biblioteca TypeScript para integração com a API do PayPay Africa",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
