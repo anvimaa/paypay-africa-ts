@@ -9,7 +9,8 @@
     "dev": "tsc --watch",
     "test": "jest",
     "prepare": "npm run build",
-    "publish": "npm publish --access public"
+    "publish": "npm publish --access public",
+    "start": "ts-node examples/basic-usage.ts"
   },
   "keywords": [
     "paypay",

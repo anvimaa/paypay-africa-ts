@@ -15,7 +15,7 @@ import {
   MulticaixaPayMethod,
   ReferencePayMethod,
   getPayerIp
-} from 'paypay-africa';
+} from '../src';
 
 // Configuração do cliente
 const config: PayPayConfig = {
@@ -253,9 +253,9 @@ async function executarExemplos() {
   // await exemploPayPayApp();
   await exemploMulticaixaExpress();
   //await exemploReferencia();
-  // await exemploConsultarStatus();
+  //await exemploConsultarStatus();
   // await exemploEstorno();
-  // await exemploFecharPagamento();
+  //await exemploFecharPagamento();
 
   console.log('\n=== Todos os exemplos concluídos ===');
 }

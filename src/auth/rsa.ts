@@ -45,7 +45,8 @@ export class RSAAuth {
       const iv = crypto.randomBytes(16); // 128-bit IV
 
       // Criptografar dados com AES
-      const aesCipher = crypto.createCipher('aes-256-cbc', aesKey);
+      //const aesCipher = crypto.createCipher('aes-256-cbc', aesKey);
+      const aesCipher = crypto.createCipheriv('aes-256-cbc', aesKey, iv);
       aesCipher.setAutoPadding(true);
       let encryptedData = aesCipher.update(content, 'utf8', 'base64');
       encryptedData += aesCipher.final('base64');
